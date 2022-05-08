@@ -1,4 +1,4 @@
-import 'package:simple_interface/do_challenge/domain/challenge.dart';
+import 'package:simple_interface/challenge/domain/challenge.dart';
 
 abstract class ChallengeStorage {
   Future<Challenge?> read();

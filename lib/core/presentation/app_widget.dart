@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_interface/challenge/challenge.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class AppWidget extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SizedBox(),
+      home: const ChallengePage(),
     );
   }
 }

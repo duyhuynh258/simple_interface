@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:simple_interface/do_challenge/domain/challenge.dart';
-import 'package:simple_interface/do_challenge/domain/challenge_failure.dart';
-import 'package:simple_interface/do_challenge/infrastructure/challenge_storage/challenge_storage.dart';
+import 'package:simple_interface/challenge/domain/challenge.dart';
+import 'package:simple_interface/challenge/domain/challenge_failure.dart';
+import 'package:simple_interface/challenge/infrastructure/challenge_storage/challenge_storage.dart';
 
 class ChallengeRepository {
   ChallengeRepository(this._challengeStorage);

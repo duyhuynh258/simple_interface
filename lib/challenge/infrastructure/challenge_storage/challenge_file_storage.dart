@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:simple_interface/do_challenge/domain/challenge.dart';
-import 'package:simple_interface/do_challenge/infrastructure/challenge_storage/challenge_storage.dart';
+import 'package:simple_interface/challenge/domain/challenge.dart';
+import 'package:simple_interface/challenge/infrastructure/challenge_storage/challenge_storage.dart';
 
 class ChallengeFileStorage implements ChallengeStorage {
   static const String _challengePath = 'a.txt';
