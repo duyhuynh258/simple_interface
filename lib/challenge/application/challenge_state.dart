@@ -7,6 +7,10 @@ abstract class ChallengeState extends Equatable {
 
   final ChallengeFailure? failure;
 
+  bool get isWritable {
+    return !(this is ChallengeInitial || this is ChallengeInProgress);
+  }
+
   @override
   List<Object?> get props => [failure];
 }
@@ -49,13 +53,19 @@ class ChallengeLoaded extends ChallengeState {
   /// Check if [modifiedChallenge] is different with fresh challenge or not.
   ///
   /// Only execute write operation if different.
+  @override
   bool get isWritable {
     if (failure != null && failure is ChallengeInvalidToWrite) {
       return false;
     }
 
-    return modifiedChallenge != null &&
+    return super.isWritable &&
+        modifiedChallenge != null &&
         modifiedChallenge!.description != freshChallenge?.description;
+  }
+
+  bool get isFresh {
+    return modifiedChallenge == null;
   }
 
   ChallengeLoaded copyWith({
