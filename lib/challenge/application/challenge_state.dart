@@ -2,9 +2,40 @@ part of 'challenge_cubit.dart';
 
 abstract class ChallengeState extends Equatable {
   const ChallengeState({
+    this.failure,
+  });
+
+  final ChallengeFailure? failure;
+
+  @override
+  List<Object?> get props => [failure];
+}
+
+class ChallengeInitial extends ChallengeState {
+  const ChallengeInitial({ChallengeFailure? failure}) : super(failure: failure);
+
+  ChallengeInitial copyWith({
+    ChallengeFailure? failure,
+  }) {
+    return ChallengeInitial(
+      failure: failure ?? this.failure,
+    );
+  }
+}
+
+class ChallengeInProgress extends ChallengeState {
+  const ChallengeInProgress({this.challenge});
+
+  /// The challenge that user see on UI before IO operations occur.
+  final Challenge? challenge;
+}
+
+class ChallengeLoaded extends ChallengeState {
+  const ChallengeLoaded({
     this.modifiedChallenge,
     this.freshChallenge,
-  });
+    ChallengeFailure? failure,
+  }) : super(failure: failure);
 
   /// Challenge that load from datasource.
   final Challenge? freshChallenge;
@@ -13,21 +44,29 @@ abstract class ChallengeState extends Equatable {
   final Challenge? modifiedChallenge;
 
   @override
-  List<Object?> get props => [freshChallenge, modifiedChallenge];
-}
+  List<Object?> get props => [freshChallenge, modifiedChallenge, super.props];
 
-class ChallengeInitial extends ChallengeState {}
+  /// Check if [modifiedChallenge] is different with fresh challenge or not.
+  ///
+  /// Only execute write operation if different.
+  bool get isWritable {
+    if (failure != null && failure is ChallengeInvalidToWrite) {
+      return false;
+    }
 
-class ChallengeInProgress extends ChallengeState {}
+    return modifiedChallenge != null &&
+        modifiedChallenge!.description != freshChallenge?.description;
+  }
 
-class ChallengeFresh extends ChallengeState {
-  const ChallengeFresh(Challenge freshChallenge)
-      : super(freshChallenge: freshChallenge);
-}
-
-class ChallengeModified extends ChallengeState {
-  const ChallengeModified(Challenge modifiedChallenge, Challenge freshChallenge)
-      : super(
-            freshChallenge: freshChallenge,
-            modifiedChallenge: modifiedChallenge);
+  ChallengeLoaded copyWith({
+    Challenge? freshChallenge,
+    Challenge? modifiedChallenge,
+    ChallengeFailure? failure,
+  }) {
+    return ChallengeLoaded(
+      freshChallenge: freshChallenge ?? this.freshChallenge,
+      modifiedChallenge: modifiedChallenge ?? this.modifiedChallenge,
+      failure: failure ?? this.failure,
+    );
+  }
 }

@@ -9,3 +9,7 @@ class ChallengeNotFound extends ChallengeFailure {
 class StorageFailure extends ChallengeFailure {
   const StorageFailure();
 }
+
+class ChallengeInvalidToWrite extends ChallengeFailure {
+  const ChallengeInvalidToWrite();
+}
